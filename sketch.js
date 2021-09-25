@@ -1,106 +1,99 @@
 var engine, world;
 
-mode = 0
-// const Bodies= Matter.Bodies
-// const World= Matter.World
-// const Body= Matter.Body
+var mode = 0;
+const Bodies = Matter.Bodies;
+const World = Matter.World;
+const Body = Matter.Body;
 
-// var button1, button2
+var button1, button2, tankimg, groundimg;
 function preload() {
-    tankimg = loadImage("images/tank1.png")
-    groundimg = loadImage("images/ground2.jpg")
+  tankimg = loadImage("images/tank1.png");
+  groundimg = loadImage("images/ground2.jpg");
 }
 
 function setup() {
-    createCanvas(windowWidth - 10, windowHeight - 10)
+  createCanvas(windowWidth - 10, windowHeight - 10);
 
-    engine = Matter.Engine.create();
-    world = engine.world;
+  engine = Matter.Engine.create();
+  world = engine.world;
 
+  if (mode == 0) {
+    button1 = createButton("Play against Computer");
+    button1.position(width / 2 - 120, height / 3 - 40);
+    button1.style("background", "#fed8b1");
+    // button1.style('opacity', '0')
+    button1.style("width", "240px");
+    button1.style("height", "80px");
 
+    button2 = createButton("Play against Each other");
+    button2.position(width / 2 - 120, height / 2 - 40);
+    // button2.style('opacity', '0')
+    button2.style("width", "240px");
+    button2.style("height", "80px");
+  }
 
-    if (mode == 0) {
+  // player = Matter.Bodies.rectangle(300, 200, 100, 50, { restitution: 0, friction: 1 ,isStatic:false})
+  // Matter.World.add(world, player)
 
-        button1 = createButton('Play aganist Computer')
-        button1.position(width / 2 - 120, height / 3 - 40)
-        button1.style('background', '#fed8b1')
-        // button1.style('opacity', '0')
-        button1.style('width', '240px')
-        button1.style('height', '80px')
-
-        button2 = createButton('Play aganist Each other')
-        button2.position(width / 2 - 120, height / 2 - 40)
-        // button2.style('opacity', '0')
-        button2.style('width', '240px')
-        button2.style('height', '80px')
-    }
-
-    // player = Matter.Bodies.rectangle(300, 200, 100, 50, { restitution: 0, friction: 1 ,isStatic:false})
-    // Matter.World.add(world, player)
-
-    Matter.Engine.run(engine);
+  Matter.Engine.run(engine);
 }
 
-
 function draw() {
-    background(0);
+  background(0);
 
-    if (mode == 0) {
-        button1.show()
-        button2.show()
-        button1.mousePressed(()=> { mode = 1 })
-        button2.mousePressed(function () { mode = 2 })
+  if (mode == 0) {
+    button1.show();
+    button2.show();
+    button1.mousePressed(() => {
+      mode = 1;
+      console.log("mode1")
+      button1.hide();
+      button2.hide();
+    });
+    button2.mousePressed( ()=> {
+      mode = 2;
+      console.log("mode2")
+      button2.hide();
+      button1.hide();
+    });
 
-        fill("white")
-        textSize(20)
-        text("Play aganist Computer ", width / 2 - 120, height / 3)
-        text("Play aganist Each other ", width / 2 - 120, height / 2)
+    fill("white");
+    textSize(20);
+    text("Play aganist Computer ", width / 2 - 120, height / 3);
+    text("Play aganist Each other ", width / 2 - 120, height / 2);
+  }
 
-    } 
+  // if (mode == 1) {
+  // ground1 = Matter.Bodies.rectangle(width / 2, 600, width, 10, { isStatic: true })
+  // Matter.World.add(world, ground1)
 
+  // console.log(ground1)
 
+  // PlayerMovement()
+  // rectMode(CENTER)
+  // fill("red")
+  // rect(ground1.position.x, ground1.position.y, width, 10)
+  //  image(groundimg, 200, 200, 300, 200)
+  // rect(player.position.x, player.position.y, 100, 50)
+  // image(tankimg, player.position.x, player.position.y, 200, 200)
+  // }
 
-    if (mode == 1) {
-        // ground1 = Matter.Bodies.rectangle(width / 2, 600, width, 10, { isStatic: true })
-        // Matter.World.add(world, ground1)
-
-        // console.log(ground1)
-
-        PlayerMovement()
-        rectMode(CENTER)
-        fill("red")
-        // rect(ground1.position.x, ground1.position.y, width, 10)
-        //  image(groundimg, 200, 200, 300, 200)
-        rect(player.position.x, player.position.y, 100, 50)
-        // image(tankimg, player.position.x, player.position.y, 200, 200)
-    }
-
-
-
-
-    drawSprites();
+  drawSprites();
 }
 // function PlayerShoot() {
 
 // }
 
 function PlayerMovement() {
-
-    if (keyDown("d"))
-        player.position.x =player.position.x+ 1
-    if (keyDown("a"))
-        player.position.x -= 1
-    // if (keyDown("s"))
-    // 	player.position.y += 1
-
+  if (keyDown("d")) player.position.x = player.position.x + 1;
+  if (keyDown("a")) player.position.x -= 1;
+  // if (keyDown("s"))
+  // 	player.position.y += 1
 }
 
 // function AIShoot() {
 
 // }
-
-
-
 
 // var Example = Example || {};
 
@@ -170,7 +163,7 @@ function PlayerMovement() {
 //                 Composite.add(world, terrain);
 
 //                 var bodyOptions = {
-//                     frictionAir: 0, 
+//                     frictionAir: 0,
 //                     friction: 0.0001,
 //                     restitution: 0.6
 //                 };
